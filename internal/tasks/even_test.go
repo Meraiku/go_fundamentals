@@ -2,8 +2,10 @@ package tasks
 
 import (
 	"testing"
+	"testing/quick"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestEven(t *testing.T) {
@@ -34,4 +36,16 @@ func TestEven(t *testing.T) {
 		)
 	}
 
+}
+
+func TestEvenWithQuick(t *testing.T) {
+
+	f := func(num int) bool {
+		checked := IsEven(num)
+		return checked == (num%2 == 0)
+	}
+
+	err := quick.Check(f, nil)
+
+	require.NoError(t, err)
 }

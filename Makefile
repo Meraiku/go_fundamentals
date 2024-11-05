@@ -15,5 +15,5 @@ cover:
 	@go tool cover -html=coverage.out
 
 mocks:
-	@go install go.uber.org/mock/mockgen@latest
+	@go get github.com/golang/mock/mockgen
 	@mockgen -source=internal/client/client.go -destination=internal/client/mocks/mock_client.go

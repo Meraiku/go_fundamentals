@@ -1,6 +1,7 @@
 package server
 
 import (
+	"context"
 	"fmt"
 	"net"
 	"net/http"
@@ -25,7 +26,7 @@ func New(client client.Client) *Api {
 	}
 }
 
-func (api *Api) Run() {
+func (api *Api) Run(ctx context.Context) error {
 
 	if port == "" {
 		port = "8080"
@@ -43,11 +44,17 @@ func (api *Api) Run() {
 		IdleTimeout:  time.Second * 120,
 	}
 
+	go func() {
+		<-ctx.Done()
+		srv.Close()
+	}()
+
 	fmt.Printf("Starting server on %s\n", url)
 
 	err := srv.ListenAndServe()
 
 	if err != nil {
-		panic(err)
+		return err
 	}
+	return nil
 }

@@ -3,6 +3,7 @@ package server
 import (
 	"fmt"
 	"net/http"
+	"strings"
 )
 
 func handleRoot(w http.ResponseWriter, r *http.Request) {
@@ -20,7 +21,7 @@ func (api *Api) handleSearch(w http.ResponseWriter, r *http.Request) {
 
 	query := r.URL.Query()
 
-	search := query.Get("q")
+	search := strings.ReplaceAll(query.Get("q"), " ", "+")
 
 	data, err := api.client.Get(fmt.Sprintf("/search?q=%s", search))
 	if err != nil {

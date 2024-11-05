@@ -2,8 +2,10 @@ package tasks
 
 import (
 	"testing"
+	"testing/quick"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestDivision(t *testing.T) {
@@ -69,4 +71,23 @@ func TestDivision(t *testing.T) {
 			},
 		)
 	}
+}
+
+func TestDivisionWithQuick(t *testing.T) {
+	f := func(num1, num2 int) bool {
+		checked, err := Division(num1, num2)
+
+		switch err {
+		case nil:
+			return checked == (num1 / num2)
+		case ErrDivisionByZero:
+			return num2 == 0
+		default:
+			return false
+		}
+	}
+
+	err := quick.Check(f, nil)
+
+	require.NoError(t, err)
 }

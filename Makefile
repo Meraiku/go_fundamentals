@@ -4,9 +4,12 @@ build:
 run:build
 	@./.bin/out
 
-tests:
-	@go test ./... -v -race 
+unit:
+	@go test $(shell go list ./... | grep -v /tests)  -v -race 
+
+integration:
+	@go test ./tests/... -v -race
 
 cover:
-	@go test ./... -v -race -cover -coverprofile=coverage.out
+	@go test $(shell go list ./... | grep -v /tests) -v -race -cover -coverprofile=coverage.out
 	@go tool cover -html=coverage.out

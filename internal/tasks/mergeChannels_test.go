@@ -22,11 +22,13 @@ func TestMergeChannels(t *testing.T) {
 
 	go helpers.WriteToChannels(dataPerChan, channels...)
 
-	got := make([]int, 0, dataPerChan*len(channels))
+	dataAmount := dataPerChan * len(channels)
+
+	got := make([]int, 0, dataAmount)
 
 	for v := range mergedCh {
 		got = append(got, v)
 	}
 
-	require.Equal(t, dataPerChan*len(channels), len(got))
+	require.Equal(t, dataAmount, len(got))
 }

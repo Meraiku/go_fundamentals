@@ -46,7 +46,7 @@ func (api *Api) Run(ctx context.Context) error {
 
 	go func() {
 		<-ctx.Done()
-		srv.Close()
+		_ = srv.Shutdown(context.Background())
 	}()
 
 	fmt.Printf("Starting server on %s\n", url)

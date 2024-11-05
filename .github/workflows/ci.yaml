@@ -21,6 +21,9 @@ jobs:
       - name: Run tests with coverage shown
         run: go test $(shell go list ./... | grep -v /tests) -cover
 
+      - name: Run unit tests
+        run: make unit 
+
       - name: Install gosec
         run: go install github.com/securego/gosec/v2/cmd/gosec@latest
         

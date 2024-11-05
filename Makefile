@@ -4,6 +4,12 @@ build:
 run:build
 	@./.bin/out
 
+docker:build
+	@docker compose up -d --build
+
+stop:
+	@docker compose stop
+
 unit:
 	@go test $(shell go list ./... | grep -v /tests)  -v -race 
 

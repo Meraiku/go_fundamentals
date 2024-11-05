@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"os"
 	"time"
+
+	"github.com/meraiku/go_fundamentals/internal/client"
 )
 
 var (
@@ -13,7 +15,17 @@ var (
 	port = os.Getenv("PORT")
 )
 
-func Run() {
+type Api struct {
+	client client.Client
+}
+
+func New(client client.Client) *Api {
+	return &Api{
+		client: client,
+	}
+}
+
+func (api *Api) Run() {
 
 	if port == "" {
 		port = "8080"
@@ -21,7 +33,7 @@ func Run() {
 
 	url := net.JoinHostPort(host, port)
 
-	handler := SetupHandlers()
+	handler := api.SetupHandlers()
 
 	srv := http.Server{
 		Addr:         url,

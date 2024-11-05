@@ -5,7 +5,7 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 )
 
-func SetupHandlers() *chi.Mux {
+func (api *Api) SetupHandlers() *chi.Mux {
 
 	r := chi.NewRouter()
 
@@ -14,6 +14,8 @@ func SetupHandlers() *chi.Mux {
 	r.Group(func(r chi.Router) {
 
 		r.Get("/", handleRoot)
+
+		r.Get("/search", api.handleSearch)
 
 	})
 

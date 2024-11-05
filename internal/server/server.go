@@ -3,6 +3,7 @@ package server
 import (
 	"context"
 	"fmt"
+	"log"
 	"net"
 	"net/http"
 	"os"
@@ -46,7 +47,7 @@ func (api *Api) Run(ctx context.Context) error {
 
 	go func() {
 		<-ctx.Done()
-		srv.Close()
+		log.Fatal(srv.Close())
 	}()
 
 	fmt.Printf("Starting server on %s\n", url)

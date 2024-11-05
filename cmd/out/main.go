@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"log"
 
 	"github.com/meraiku/go_fundamentals/internal/client/google"
 	"github.com/meraiku/go_fundamentals/internal/server"
@@ -13,5 +14,8 @@ func main() {
 
 	ctx := context.TODO()
 
-	api.Run(ctx)
+	err := api.Run(ctx)
+	if err != nil {
+		log.Fatal(err)
+	}
 }

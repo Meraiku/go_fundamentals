@@ -3,3 +3,10 @@ build:
 
 run:build
 	@./.bin/out
+
+tests:
+	@go test ./... -v -race 
+
+cover:
+	@go test ./... -v -race -cover -coverprofile=coverage.out
+	@go tool cover -html=coverage.out

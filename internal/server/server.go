@@ -51,10 +51,5 @@ func (api *Api) Run(ctx context.Context) error {
 
 	fmt.Printf("Starting server on %s\n", url)
 
-	err := srv.ListenAndServe()
-
-	if err != nil {
-		return err
-	}
-	return nil
+	return srv.ListenAndServe()
 }

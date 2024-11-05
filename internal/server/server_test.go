@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	"net/http"
 	"sync"
 	"testing"
 
@@ -16,13 +17,16 @@ func TestServerRun(t *testing.T) {
 	wg := &sync.WaitGroup{}
 
 	wg.Add(1)
+
 	go func() {
 		defer wg.Done()
 
 		err = api.Run(ctx)
+
 	}()
 
 	cancel()
+	wg.Wait()
 
-	require.NoError(t, err)
+	require.EqualError(t, http.ErrServerClosed, err.Error())
 }

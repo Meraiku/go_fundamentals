@@ -18,9 +18,6 @@ jobs:
         with:
           go-version: '1.23'
 
-      - name: Run tests with coverage shown
-        run: go test $(shell go list ./... | grep -v /tests) -cover
-
       - name: Run unit tests
         run: make unit 
 

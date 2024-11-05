@@ -18,14 +18,8 @@ func MergeChannels[T any](channels ...<-chan T) <-chan T {
 
 			go func() {
 				defer wg.Done()
-				for {
-					select {
-					case v, ok := <-ch:
-						if !ok {
-							return
-						}
-						inCh <- v
-					}
+				for v := range ch {
+					inCh <- v
 				}
 			}()
 
@@ -38,14 +32,8 @@ func MergeChannels[T any](channels ...<-chan T) <-chan T {
 	go func() {
 		defer close(outCh)
 
-		for {
-			select {
-			case v, ok := <-inCh:
-				if !ok {
-					return
-				}
-				outCh <- v
-			}
+		for v := range inCh {
+			outCh <- v
 		}
 
 	}()
